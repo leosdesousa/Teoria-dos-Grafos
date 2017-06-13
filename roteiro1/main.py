@@ -122,13 +122,19 @@ def VerificaParNaoAdjacente(Grafo):
 
 #vertices = input(" Digite os vertives separados por , e um espaco: ")
 #v=verificaListaVertice(vertices)
-v=verificaListaVertice("J, C, E")
+v=verificaListaVertice("J, C, E, A")
 #dici = input("Digite as arestas :")
 
 #a = ConverteListaDicionario(dici)
-a=ConverteListaDicionario(v,"a3(J-C), a4(C-W)")
+a=ConverteListaDicionario(v,"a3(J-C), a4(C-E), a5(A-E)")
 g=Grafo(v,a)
 print(g)
+g.criamatriz()
+g.imprimir()
+print()
+g.criararestaMatriz()
+g.imprimir()
+g.parNaoAdjacente()
 
 #VerificaParNaoAdjacente(g)
 

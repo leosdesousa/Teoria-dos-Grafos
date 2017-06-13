@@ -29,6 +29,7 @@ class Grafo:
                 raise ArestaInvalidaException('A aresta ' + A[a] + ' é inválida')
 
         self.A = A
+        self.Matriz=[]
 
     def arestaValida(self, aresta=''):
         '''
@@ -127,4 +128,73 @@ class Grafo:
 
         return grafo_str
 
+    def criamatriz(self):
+        '''Função respsonsavel por criar uma matriz para grafos simples, de acordo com a quantidade de vertices
+        criados pelo usuario, e contida na variavel do grafo self.Matriz..
+        exemplo ['-', '0', '0']
+                ['-', '-', '0']
+                ['-', '-', '-']
+        Como o grafo é simples, a parte da diagonal central para baixo da matriz é completada com caractéres '-', e da 
+        diagonal pra cima, é completada por 0, sendo subistituido quando tiver uma aresta na posição.
+        '''
+        tam = len(self.N)
+        matriz = self.Matriz
+        for i in range(tam):
+            linha = []
+            for j in range(tam):
+                linha.append('0')
+            matriz.append(linha)
+        for i in range(tam - 1, -1, -1):
+            for j in range(i, -1, -1):
+                matriz[i][j] = '-'
+        self.Matriz= matriz
+
+    def imprimir(self):
+        ''' 
+        Função resposnsável por imprimir a matriz.. qualquer hora, qualquer momento só basta chamar...
+        '''
+        for i in self.Matriz:
+            print(i)
+
+    def criararestaMatriz(self):
+        '''
+            Função que posiciona as ligações das arestas na matriz, quando houver.
+            E faz esse pocisionamento substituindo os '0' por '1' e assim indicando que nessa posição existe uma aresta
+            conectando os vertices correspondetes a coordenada. 
+            
+            exemplo:
+            ['-', '0', '0']
+            ['-', '-', '0']
+            ['-', '-', '-']
+
+            arestas C-E, J-C
+            ['-', '1', '0']
+            ['-', '-', '1']
+            ['-', '-', '-']
+            '''
+        a=self.A
+        v=self.N
+        matriz=self.Matriz
+        pares = a.values()
+        for i in pares:
+            elemento = i.split("-")
+            tam1 = v.index(elemento[0])
+            tam2 = v.index(elemento[1])
+            if (tam1 < tam2):
+                matriz[tam1][tam2] = '1'
+            else:
+                matriz[tam2][tam1] = '1'
+
+    def parNaoAdjacente(self):
+        '''
+        Função coorespondente a questão 3 letra a..
+        Retorna os pares de vertices nao adjacentes existentes na matriz...
+        '''
+        matriz=self.Matriz
+        v=self.N
+        tam = len(v)
+        for i in range(tam):
+            for j in range(tam):
+                if matriz[i][j] == '0':
+                    print(v[i] + "-" + v[j])
 
