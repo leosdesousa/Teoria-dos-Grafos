@@ -9,12 +9,12 @@ a3={'a1':'3-2','a2':'2-4','a3':'4-3'}
 
 #v4=['1','2','3','4','5','6','7','8']
 #a4={'a1':'1-4','a2':'1-2','a 3':'2-7','a4':'2-5','a5':'5-7','a6':'5-6','a7':'3-6','a8':'3-5'}
-v4=['1','2','3','4']
-a4={'a1':'1-2','a2':'1-4','a3':'1-3','a4':'3-4'}
+v4=['0','1','2','3','4','5','6','7']
+a4={'a1':'0-4','a2':'1-6','a6':'1-5','a3':'2-7','a4':'2-6','a5':'3-7','a7':'3-5','a8':'5-3','a9':'3-1','a10':'6-2','a11':'7-2'}
 
 
 
-
+1
 def criamatriz(v):
     tam=len(v)
     matriz=[]
@@ -152,7 +152,7 @@ def confereCiclo(matriz, v):
 '''
 
 def verificaCiclo(matriz,vertice,aresta):
-    tam=len(vertice)
+   ''' tam=len(vertice)
     #print(vertice)
     par1=[]
     par2=[]
@@ -246,10 +246,120 @@ def verificaCiclo(matriz,vertice,aresta):
          break
     if achou==False:
         print("False")
+    '''
+
+def ciclo(matriz,vertice,aresta):
+    tam = len(vertice)
+    # print(vertice)
+    par1 = []
+    par2 = []
+    ciclos = []
+    for i in range(tam):
+        n = []
+        ciclos.append(n)
+        for j in range(tam):
+            if matriz[i][j] == '1':
+                par1.append(i)
+                par2.append(j)
+
+    saida=False
+
+    for i in range(len(vertice)):
+        lista_ciclo = []
+        visitados=[]
+        x=i
+        if(grauVertice(matriz,vertice,str(x))==1):
+            continue
+        lista_ciclo.append(x)
+        flag=False
+        cont = 0
+        while True:
+            if cont==len(vertice):
+                break
+            cont+=1
+
+           # print(encontrapar(x,par1,par2))
+            aux=encontrapar(x, par1, par2,visitados,matriz,vertice)
+            if len(aux)>=1:
+                for i in aux:
+                    x=i
+                    if( grauVertice(matriz, vertice, str(i)) > 1):
+                        print("i",i)
+                        if not i in lista_ciclo:
+                            lista_ciclo.append(i)
+                            x=i
+                            break
+                        else:
+                            if len(lista_ciclo)>2:
+                                if lista_ciclo[0] in aux:
+                                    for j in aux:
+                                        if lista_ciclo[0]==j and not aux[j] ==x:
+
+                                            #lista_ciclo.append(aux[j])
+                                            if j==lista_ciclo[0]:
+                                                print("Ciclo ", lista_ciclo)
+                                                flag=True
+                                                break
+
+                    if flag == True:
+                        break
+
+            if flag==True:
+                break
+        if flag == True:
+            break
+    if len(lista_ciclo)<=2:
+        print(False)
 
 
 
 
+
+
+
+
+'''def encontrapar(vertice,par1,par2,visitados,matriz,ver):
+    lista=[]
+
+    for i in range(len(par1)):
+        if par1[i] == vertice:
+            if (len(visitados) >= 2):
+
+                if par2[i] == visitados[0]:
+                    if (grauVertice(matriz, ver,str(par2[i])) > 1):
+
+                        visitados.append(par1[i])
+                        print("ciclo", visitados)
+                        return -1
+            if (not i in visitados):
+                if not par2[i] in visitados:
+                    lista.append(par2[i])
+        else:
+            if par2[i] == vertice:
+                if (len(visitados) >= 2):
+                    if par1[i]==visitados[0]:
+                        if (grauVertice(matriz, ver, str(par2[i])) > 1):
+                            visitados.append(par2[i])
+                            print("ciclo", visitados)
+                            return -1
+                if (not i in visitados):
+                    if not par1[i] in visitados:
+                        lista.append(par1[i])
+
+    return lista
+'''
+
+def encontrapar(vertice,par1,par2,visitados,matriz,ver):
+    lista=[]
+
+    for i in range(len(par1)):
+        if par1[i] == vertice:
+                lista.append(par2[i])
+        else:
+            if par2[i] == vertice:
+                lista.append(par1[i])
+
+    return lista
 
 m=criamatriz(v)
 #imprimir(m)
@@ -289,5 +399,5 @@ print(a4)
 criararestaMatriz(m4,a4 ,v4)
 imprimir(m4)
 print("\n")
-verificaCiclo(m4,v4,a4)
+ciclo(m4,v4,a4)
 #print(grauVertice(m4,v4,"4"))
