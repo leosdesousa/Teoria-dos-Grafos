@@ -1,4 +1,12 @@
-
+"""
+		Professor, este arquivo contem as funções de
+		CaminhoEuleriano
+		Warshal
+		
+		Professor, tem o roteiro 1, que fizemos a funcao ciclo()
+		ela consegue retornar o ciclo estamos chamando elas nessas
+		funções para mostrar o funcinamento... 
+"""
 class Grafo:
     def __init__(self,Vertice=[],aresta={}):
         self.matriz=None;
